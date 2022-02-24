@@ -15,10 +15,27 @@ Webcam.set({
  }
 
 
- classify=ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/v_sl95BzE/model.json",modelLoaded);
+ imageClassifier=ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/v_sl95BzE/model.json",modelLoaded);
 
 
  function modelLoaded(){
      console.log("modelLoaded");
  }
  
+
+function check() {
+   picture = document.getElementById("ss");
+   imageClassifier.classify(picture, gotResult);
+}
+
+function gotResult(error, results){
+   if(error){
+       console.log(error);
+   }
+   else{
+       console.log(results);
+       document.getElementById("ObjectName").innerHTML = results[0].label;
+       document.getElementById("ObjectAccuracy").innerHTML = results[0].confidence;
+   }
+   
+}
